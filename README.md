@@ -5,7 +5,7 @@
 ## 🎯 Objectifs d’apprentissage
 - Comprendre comment utiliser des conteneurs avec **Docker**.
 - Apprendre à écrire et exécuter des tests automatisés avec **pytest**.
-- Mettre en place un pipeline **CI/CD** avec **GitLab** et **Docker**.
+- Mettre en place un pipeline **CI/CD** avec **GitHub** et **Docker**.
 - Accéder à un serveur via **SSH** et vérifier la disponibilité des ressources computationnelles (CPU, RAM, espace disque)
 - Savoir combiner les outils de développement modernes (VS Code, **Git**, **Docker**) pour lancer un cycle de développement logiciel.
 
@@ -18,7 +18,7 @@ Dans les prochains laboratoires, nous verrons des architectures plus complexes e
 
 > ⚠️ IMPORTANT : Avant de commencer le setup et les activités, veuillez lire la documentation architecturale dans le répertoire `/docs/arc42/docs.pdf`.
 
-### 1. Faites un fork et clonez le dépôt GitLab
+### 1. Faites un fork et clonez le dépôt GitHub
 
 ```bash
 git clone https://github.com/guteacher/log430-a25-labo0
@@ -94,7 +94,7 @@ python3 -m pytest
 
 ### 2. Ajoutez une étape à la pipeline CI (intégration continue)
 
-Ajoutez une étape (step) dans `.github/workflows/.gitlab-ci.yml` pour que GitLab exécute les tests automatiquement à chaque push. 
+Ajoutez une étape (step) dans `.github/workflows/.github-ci.yml` pour que GitHub exécute les tests automatiquement à chaque push. 
 
 ### 3. Versionnez votre code
 
@@ -106,9 +106,9 @@ git commit -m "Tests pour calculator.py"
 git push
 ```
 
-Gitlab éxecutera les tests dans son serveur, et ils devront passer également si ils sont corrects.
+GitHub éxecutera les tests dans son serveur, et ils devront passer également si ils sont corrects.
 
-> 💡 **Question 2** :  Que fait GitLab pendant les étapes de « setup » et « checkout » ? Veuillez inclure la sortie du terminal Gitlab CI dans votre réponse.
+> 💡 **Question 2** :  Que fait GitHub pendant les étapes de « setup » et « checkout » ? Veuillez inclure la sortie du terminal GitHub CI dans votre réponse.
 
 ### 4. Automatiser déploiement continu (CD)
 Après l’exécution des tests, déployez l’application dans un serveur ou machine virtuelle via SSH manuellement:
@@ -121,24 +121,15 @@ cd log430-a25-labo0
 
 >  📝 **NOTE** : N'oubliez pas d'installer Python, Docker et toutes les dépendances nécessaires sur le serveur de déploiement.
 
-Procédez ensuite à la mise en place de l’automatisation du déploiement continu (CD) dans la machine virtuelle à l’aide de GitLab et de scripts Bash. Les approches les plus courantes pour implémenter le CD consistent à effectuer le déploiement via SSH ou à utiliser un webhook. Si votre SSH est protégé par mot de passe, vous devrez peut-être créer aussi un environnement et des secrets. Vous trouverez ci-dessous quelques liens de réference :
+Procédez ensuite à la mise en place de l’automatisation du déploiement continu (CD) dans la machine virtuelle à l’aide de GitHub et de scripts Bash. Je vous recommande d'utiliser un GitHub Runner auto-hébergé (self-hosted) pour effectuer le déploiement automatique dans votre VM. Voici les instructions pour créer un [Runner](https://docs.github.com/en/actions/how-tos/manage-runners/self-hosted-runners/add-runners).
 
-SSH:
-- https://www.cyberciti.biz/faq/noninteractive-shell-script-ssh-password-provider/ 
+Il existe d'autres méthodes de déploiement continu, mais vous avez besoin d'un serveur avec un nom DNS ou une adresse IP ouvert à Internet pour pouvoir l'utiliser avec GitHub. Par exemple :
+- **SSH**: https://www.cyberciti.biz/faq/noninteractive-shell-script-ssh-password-provider/ 
+- **Webhook**: https://docs.github.com/en/webhooks
 
-GitLab:
-- https://docs.gitlab.com/user/project/integrations/webhooks/#create-a-webhook
-- https://docs.gitlab.com/user/project/integrations/webhook_events/#job-events
+> ⚠️ IMPORTANT : Il n'est pas recommandé d'écrire les noms d'utilisateur et les mots de passe en « plain text » dans un script CI/CD. Veuillez utiliser les [secrets](https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-secrets#creating-secrets-for-an-environment) dans votre [environnement](https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/manage-environments#creating-an-environment) GitHub.
 
-GitHub:
-- https://docs.github.com/en/webhooks
-- https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/manage-environments#creating-an-environment
-- https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-secrets#creating-secrets-for-an-environment
-
-> ⚠️ IMPORTANT : Il n'est pas recommandé d'écrire les noms d'utilisateur et les mots de passe en « plain text » dans un script CI/CD. Veuiller utiliser les secrets dans GitHub/GitLab.
-
-
-> 💡 **Question 3** : Quel approache et quelles commandes avez-vous exécutées pour automatiser le déploiement continu de l'application dans la machine virtuelle ? Veuillez inclure les sorties du terminal et les scripts bash dans votre réponse.
+> 💡 **Question 3** : Quelle approche et quelles commandes avez-vous exécutées pour automatiser le déploiement continu de l'application dans la machine virtuelle ? Veuillez inclure les sorties du terminal et les scripts Bash dans votre réponse.
 
 Quelques commandes utiles pour vérifier l’état des ressources :
 ```bash
